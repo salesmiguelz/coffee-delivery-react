@@ -1,0 +1,48 @@
+import { MapPinIcon } from "@phosphor-icons/react";
+import styled from "styled-components";
+
+export const HeaderContainer = styled.div`
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+`
+
+export const LogoContainer = styled.div`
+    width: 85px;
+    height: 40px;
+`
+
+export const HeaderInfo = styled.div`
+    display: flex;
+    gap: 12px;
+`
+
+export const HeaderLocale = styled.div`
+    background-color: ${props => props.theme['purple-light']};
+    color: ${props => props.theme['purple-dark']};
+    font-size: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+
+    padding: 8px;
+    border-radius: 6px;
+`
+
+export const HeaderLocaleIcon = styled(MapPinIcon)`
+    color: ${props => props.theme['purple']};
+`
+
+export const HeaderCart = styled.div`
+    background-color: ${props => props.theme['yellow-light']};
+    color: ${props => props.theme['yellow-dark']};
+
+    padding: 12px;
+    border-radius: 6px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
