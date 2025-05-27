@@ -16,6 +16,9 @@ export function Header() {
                 </HeaderLocale>
 
                 <HeaderCart>
+                    <span>
+                        3
+                    </span>
                     <ShoppingCartIcon size={24} weight="fill" />
                 </HeaderCart>
             </HeaderInfo>

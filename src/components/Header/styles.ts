@@ -45,4 +45,27 @@ export const HeaderCart = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+
+    span {
+        position: absolute;
+        bottom: 10px;
+        top: -8px;
+        right: -8px;
+
+        color: white;
+        background-color: ${props => props.theme['yellow-dark']};
+
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 16px;
+        font-weight: bold;
+
+    }
 `
