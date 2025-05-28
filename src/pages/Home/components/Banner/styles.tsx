@@ -7,11 +7,21 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     gap: 50px;
+    margin: 50px 0px;
 
+   &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: url('./src/assets/banner-bg.svg');
-    background-size: cover;      
-    background-repeat: no-repeat; 
-    background-position: center; 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+  }
 `
 
 export const TextContainer = styled.div`
