@@ -2,7 +2,6 @@ import { MapPinIcon } from "@phosphor-icons/react";
 import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
-    padding: 50px;
     display: flex;
     justify-content: space-between;
 `
@@ -39,7 +38,6 @@ export const HeaderCart = styled.div`
     background-color: ${props => props.theme['yellow-light']};
     color: ${props => props.theme['yellow-dark']};
 
-    padding: 12px;
     border-radius: 6px;
     
     display: flex;

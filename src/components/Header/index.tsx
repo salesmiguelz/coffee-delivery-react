@@ -1,6 +1,7 @@
-import { MapPinIcon, ShoppingCartIcon } from "@phosphor-icons/react"
+import { ShoppingCartIcon } from "@phosphor-icons/react"
 import logo from "../../assets/logo.svg"
 import { HeaderCart, HeaderContainer, HeaderInfo, HeaderLocale, HeaderLocaleIcon, LogoContainer } from "./styles"
+import { Link } from "react-router-dom"
 
 export function Header() {
     return (
@@ -16,13 +17,22 @@ export function Header() {
                 </HeaderLocale>
 
                 <HeaderCart>
-                    <span>
-                        3
-                    </span>
-                    <ShoppingCartIcon size={24} weight="fill" />
+                    <Link to="/checkout" style={{
+                        all: "unset",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "12px",
+                        justifyContent: "center",
+                    }}>
+                        <span>
+                            3
+                        </span>
+                        <ShoppingCartIcon size={24} weight="fill" />
+                    </Link>
                 </HeaderCart>
             </HeaderInfo>
 
-        </HeaderContainer>
+        </HeaderContainer >
     )
 }
