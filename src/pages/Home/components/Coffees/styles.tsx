@@ -12,5 +12,6 @@ export const Title = styled.h2`
 export const CoffeesContainer = styled.div`
     margin-top: 30px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); 
+    grid-template-columns:repeat(auto-fit, minmax(18rem, 1fr));
+    row-gap: 52px
 `
