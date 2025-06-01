@@ -12,7 +12,7 @@ export function Header() {
 
             <HeaderInfo>
                 <HeaderLocale>
-                    <HeaderLocaleIcon size={32} weight="fill" />
+                    <HeaderLocaleIcon size={36} weight="fill" />
                     <p>Juiz de Fora, MG</p>
                 </HeaderLocale>
 

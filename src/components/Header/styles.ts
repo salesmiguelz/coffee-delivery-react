@@ -4,15 +4,19 @@ import styled from "styled-components";
 export const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `
 
 export const LogoContainer = styled.div`
     width: 85px;
     height: 40px;
+    margin-top: 12px;
 `
 
 export const HeaderInfo = styled.div`
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 12px;
 `
 
