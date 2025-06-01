@@ -4,6 +4,7 @@ import { Subtitle } from "../Home/components/Banner/styles";
 import { Input } from "./components/Input";
 import { PaymentMethod } from "./components/PaymentMethod";
 import { SelectedProduct } from "./components/SelectedProduct";
+import { Link } from "react-router-dom";
 
 export function Checkout() {
     return (
@@ -82,7 +83,11 @@ export function Checkout() {
                             <span>Total</span>
                             <span>R$ 33,20</span>
                         </SummaryTotal>
-                        <ConfirmOrderButton>CONFIRMAR PEDIDO</ConfirmOrderButton>
+                        <Link to="/success" style={{
+                            all: "unset",
+                        }}>
+                            <ConfirmOrderButton>CONFIRMAR PEDIDO</ConfirmOrderButton>
+                        </Link>
                     </OrderSummary>
                 </OrderDetails>
             </OrderDetailsContainer>

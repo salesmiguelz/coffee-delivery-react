@@ -6,9 +6,19 @@ import { Link } from "react-router-dom"
 export function Header() {
     return (
         <HeaderContainer>
-            <LogoContainer>
-                <img src={logo} alt="" />
-            </LogoContainer>
+            <Link to="/" style={{
+                all: "unset",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                padding: "12px",
+                justifyContent: "center",
+            }}>
+                <LogoContainer>
+                    <img src={logo} alt="" />
+                </LogoContainer>
+            </Link>
+
 
             <HeaderInfo>
                 <HeaderLocale>
