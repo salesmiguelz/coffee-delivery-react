@@ -1,27 +1,37 @@
 import { ShoppingCartIcon } from '@phosphor-icons/react';
-import CoffeeImage from '../../../../../assets/coffee.svg'
 import { Counter } from '../Counter';
 import { Container, Title, Actions, Description, ImageContainer, Categories, Category, TextContainer, Price, Currency, Value, CartContainer } from "./styles";
 
-export function Coffee() {
+interface CategoryProps {
+    id: string,
+    name: string,
+}
+interface CoffeeProps {
+    image: string,
+    name: string,
+    categories: CategoryProps[],
+    description: string,
+    price: Number
+}
+
+export function Coffee({ image, name, categories, description, price }: CoffeeProps) {
     return (
         <Container>
             <ImageContainer>
-                <img src={CoffeeImage} alt="" />
+                <img src={image} alt={`Imagem de ${name}`} />
             </ImageContainer>
 
             <Categories>
-                <Category>Tradicional</Category>
-                <Category>Extra Forte</Category>
+                {categories.map(category => <Category key={category.id}>{category.name}</Category>)}
             </Categories>
 
             <TextContainer>
                 <Title>
-                    Expresso tradicional
+                    {name}
                 </Title>
 
                 <Description>
-                    Meio a meio de expresso tradicional com leite vaporizado
+                    {description}
                 </Description>
             </TextContainer>
 
@@ -29,7 +39,7 @@ export function Coffee() {
             <Actions>
                 <Price>
                     <Currency>R$</Currency>
-                    <Value>9,99</Value>
+                    <Value>{price.toString()}</Value>
                 </Price>
                 <Counter />
                 <CartContainer>
