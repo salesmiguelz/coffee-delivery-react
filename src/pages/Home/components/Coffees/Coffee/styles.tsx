@@ -93,4 +93,11 @@ export const CartContainer = styled.div`
     align-items: center;
     justify-content: center;
     height: 38px;
+
+    transition: background-color 0.2s ease;
+
+    &:hover{
+        cursor: pointer;
+        background-color: ${props => props.theme['purple']};
+    }
 `

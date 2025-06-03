@@ -17,7 +17,7 @@ export function Coffees() {
                 { id: crypto.randomUUID(), name: 'Com leite' }
             ],
             description: 'Meio a meio de expresso tradicional com leite vaporizado',
-            price: 9.99
+            price: "9,99"
         },
         {
             id: crypto.randomUUID(),
@@ -27,7 +27,7 @@ export function Coffees() {
                 { id: crypto.randomUUID(), name: 'Tradicional' }
             ],
             description: 'O tradicional café feito com grãos moídos na hora',
-            price: 6.50
+            price: "6,50"
         },
         {
             id: crypto.randomUUID(),
@@ -38,7 +38,7 @@ export function Coffees() {
                 { id: crypto.randomUUID(), name: 'Com leite' }
             ],
             description: 'Uma mistura deliciosa de café, leite vaporizado e espuma cremosa',
-            price: 11.00
+            price: "11,00"
         },
         {
             id: crypto.randomUUID(),
@@ -49,7 +49,7 @@ export function Coffees() {
                 { id: crypto.randomUUID(), name: 'Com leite' }
             ],
             description: 'Expresso com bastante leite vaporizado e um toque de espuma',
-            price: 10.50
+            price: "10,50"
         },
         {
             id: crypto.randomUUID(),
@@ -60,7 +60,7 @@ export function Coffees() {
                 { id: crypto.randomUUID(), name: 'Com leite' }
             ],
             description: 'Expresso marcado com uma leve camada de espuma de leite',
-            price: 8.90
+            price: "8,90"
         },
     ];
 
