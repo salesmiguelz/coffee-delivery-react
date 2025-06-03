@@ -71,7 +71,7 @@ export const Payment = styled.div`
     background-color: ${props => props.theme['base-card']};
     padding: 40px;
     width: 640px;
-
+    height: 200px;
     display: flex;
     align-items: flex-start;
     flex-direction: column;

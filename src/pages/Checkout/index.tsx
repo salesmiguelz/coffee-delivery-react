@@ -5,8 +5,20 @@ import { Input } from "./components/Input";
 import { PaymentMethod } from "./components/PaymentMethod";
 import { SelectedProduct } from "./components/SelectedProduct";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export function Checkout() {
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+
+    function handleSetSelectedPaymentMethod(type: 'credit' | 'debit' | 'cash') {
+        setSelectedPaymentMethod(oldType => {
+            if (oldType === type) {
+                return '';
+            } else {
+                return type;
+            }
+        })
+    }
     return (
         <Container>
             <FinishOrder>
@@ -47,9 +59,9 @@ export function Checkout() {
                     </PaymentHeader>
 
                     <PaymentMethods>
-                        <PaymentMethod type={'credit'} />
-                        <PaymentMethod type={'debit'} />
-                        <PaymentMethod type={'cash'} />
+                        <PaymentMethod type={'credit'} isSelected={selectedPaymentMethod === 'credit'} handleSetSelectedPaymentMethod={handleSetSelectedPaymentMethod} />
+                        <PaymentMethod type={'debit'} isSelected={selectedPaymentMethod === 'debit'} handleSetSelectedPaymentMethod={handleSetSelectedPaymentMethod} />
+                        <PaymentMethod type={'cash'} isSelected={selectedPaymentMethod === 'cash'} handleSetSelectedPaymentMethod={handleSetSelectedPaymentMethod} />
                     </PaymentMethods>
 
                 </Payment>

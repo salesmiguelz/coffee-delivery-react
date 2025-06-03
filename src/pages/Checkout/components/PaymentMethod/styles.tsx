@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+
+export const Container = styled.div <{ $isSelected?: boolean }> `
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,7 +11,15 @@ export const Container = styled.div`
     padding: 16px;
     border-radius: 6px;
 
-    background-color: ${props => props.theme['base-button']};
+    background-color: ${props => props.$isSelected ? props.theme['purple-light'] : props.theme['base-button']};
+    outline: ${props => props.$isSelected ? `1px solid ${props.theme['purple']}` : 'none'};
+
+    cursor: pointer;
+
+    &:hover{
+        background-color: ${props => !props.$isSelected ? props.theme['base-hover'] : props.theme['purple-light']};
+    }
+
 `
 
 export const Icon = styled.div`
