@@ -4,105 +4,137 @@ import { Subtitle } from "../Home/components/Banner/styles";
 import { Input } from "./components/Input";
 import { PaymentMethod } from "./components/PaymentMethod";
 import { SelectedProduct } from "./components/SelectedProduct";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import z from "zod";
+
+const newOrderFormValidationSchema = z.object({
+    zipcode: z.string().min(1, 'Informe o CEP'),
+    street: z.string().min(1, 'Insira o nome da rua'),
+    number: z.number().positive('Insira um número válido'),
+    complement: z.string().optional(),
+    neighborhood: z.string().min(1, 'Insira seu bairro'),
+    city: z.string().min(1, 'Insira sua cidade'),
+    uf: z.string().min(1, 'Insira seu estado').max(2),
+    paymentMethod: z.enum(['credit', 'debit', 'cash'])
+});
+
+export type NewOrderFormData = z.infer<typeof newOrderFormValidationSchema>;
 
 export function Checkout() {
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+    const { register, setValue, watch, handleSubmit, formState: { errors } } = useForm<NewOrderFormData>({
+        resolver: zodResolver(newOrderFormValidationSchema),
+        defaultValues: {
+            zipcode: '',
+            street: '',
+            number: 0,
+            complement: '',
+            neighborhood: '',
+            city: '',
+            uf: '',
+            paymentMethod: 'credit'
+        }
+    });
 
+    const selectedPaymentMethod = watch("paymentMethod")
     function handleSetSelectedPaymentMethod(type: 'credit' | 'debit' | 'cash') {
-        setSelectedPaymentMethod(oldType => {
-            if (oldType === type) {
-                return '';
-            } else {
-                return type;
-            }
-        })
+        if (type !== selectedPaymentMethod) {
+            setValue("paymentMethod", type, {
+                shouldValidate: true,
+                shouldTouch: true
+            });
+        }
     }
+
+    function handleNewOrderFormSubmit(data: NewOrderFormData) {
+        console.log("data", data);
+    }
+
     return (
         <Container>
-            <FinishOrder>
-                <Title>Complete seu pedido</Title>
-                <DeliveryAddress>
-                    <DeliveryAddressHeader>
-                        <DeliveryAddressIcon>
-                            <MapPinAreaIcon size={22} />
-                        </DeliveryAddressIcon>
-                        <DeliveryAddressText>
-                            <Subtitle>Endereço de Entrega </Subtitle>
-                            <Subtext>Informe o endereço onde deseja receber seu pedido</Subtext>
-                        </DeliveryAddressText>
-                    </DeliveryAddressHeader>
+            <form onSubmit={handleSubmit(handleNewOrderFormSubmit, (errors: any) => {
+                console.log("form invalido", errors)
+            })}>
+                <FinishOrder>
+                    <Title>Complete seu pedido</Title>
+                    <DeliveryAddress>
+                        <DeliveryAddressHeader>
+                            <DeliveryAddressIcon>
+                                <MapPinAreaIcon size={22} />
+                            </DeliveryAddressIcon>
+                            <DeliveryAddressText>
+                                <Subtitle>Endereço de Entrega </Subtitle>
+                                <Subtext>Informe o endereço onde deseja receber seu pedido</Subtext>
+                            </DeliveryAddressText>
+                        </DeliveryAddressHeader>
 
 
-                    <DeliveryForm>
-                        <Input placeholder='CEP' size='S' />
-                        <Input placeholder='Rua' size='L' />
-                        <Input placeholder='Número' size='S' />
-                        <Input placeholder='Complemento' size='M' optional />
-                        <Input placeholder='Bairro' size='S' />
-                        <Input placeholder='Cidade' size='S' />
-                        <Input placeholder='UF' size='XS' />
-                    </DeliveryForm>
-                </DeliveryAddress>
+                        <DeliveryForm>
+                            <Input placeholder='CEP' size='S' {...register('zipcode')} errors={errors?.zipcode?.message} />
+                            <Input placeholder='Rua' size='L' {...register('street')} errors={errors?.street?.message} />
+                            <Input placeholder='Número' size='S' {...register('number')} errors={errors?.number?.message} type={"number"} />
+                            <Input placeholder='Complemento' size='M' optional errors={errors?.complement?.message}{...register('complement')} />
+                            <Input placeholder='Bairro' size='S' errors={errors?.neighborhood?.message}{...register('neighborhood')} />
+                            <Input placeholder='Cidade' size='S' errors={errors?.city?.message} {...register('city')} />
+                            <Input placeholder='UF' size='XS' {...register('uf')} />
+                        </DeliveryForm>
+                    </DeliveryAddress>
 
-                <Payment>
-                    <PaymentHeader>
-                        <PaymentIcon>
-                            <CurrencyDollarIcon size={22} />
-                        </PaymentIcon>
+                    <Payment>
+                        <PaymentHeader>
+                            <PaymentIcon>
+                                <CurrencyDollarIcon size={22} />
+                            </PaymentIcon>
 
-                        <PaymentText>
-                            <Subtitle>Pagamento </Subtitle>
-                            <Subtext>O pagamento é feito na entrega. Escolha a forma que deseja pagar</Subtext>
-                        </PaymentText>
-                    </PaymentHeader>
+                            <PaymentText>
+                                <Subtitle>Pagamento </Subtitle>
+                                <Subtext>O pagamento é feito na entrega. Escolha a forma que deseja pagar</Subtext>
+                            </PaymentText>
+                        </PaymentHeader>
 
-                    <PaymentMethods>
-                        <PaymentMethod type={'credit'} isSelected={selectedPaymentMethod === 'credit'} handleSetSelectedPaymentMethod={handleSetSelectedPaymentMethod} />
-                        <PaymentMethod type={'debit'} isSelected={selectedPaymentMethod === 'debit'} handleSetSelectedPaymentMethod={handleSetSelectedPaymentMethod} />
-                        <PaymentMethod type={'cash'} isSelected={selectedPaymentMethod === 'cash'} handleSetSelectedPaymentMethod={handleSetSelectedPaymentMethod} />
-                    </PaymentMethods>
+                        <PaymentMethods>
+                            <PaymentMethod type={'credit'} isSelected={selectedPaymentMethod === 'credit'} handleSetSelectedPaymentMethod={handleSetSelectedPaymentMethod} />
+                            <PaymentMethod type={'debit'} isSelected={selectedPaymentMethod === 'debit'} handleSetSelectedPaymentMethod={handleSetSelectedPaymentMethod} />
+                            <PaymentMethod type={'cash'} isSelected={selectedPaymentMethod === 'cash'} handleSetSelectedPaymentMethod={handleSetSelectedPaymentMethod} />
+                        </PaymentMethods>
 
-                </Payment>
+                    </Payment>
 
-            </FinishOrder>
+                </FinishOrder>
 
-            <OrderDetailsContainer>
-                <Title>Cafés selecionados</Title>
-                <OrderDetails>
-                    <SelectedProducts>
-                        <SelectedProduct>
-                        </SelectedProduct>
-                        <StyledHr />
+                <OrderDetailsContainer>
+                    <Title>Cafés selecionados</Title>
+                    <OrderDetails>
+                        <SelectedProducts>
+                            <SelectedProduct>
+                            </SelectedProduct>
+                            <StyledHr />
 
-                        <SelectedProduct>
-                        </SelectedProduct>
-                        <StyledHr />
-                    </SelectedProducts>
-                    <OrderSummary>
-                        <SummaryItem>
-                            <span>Total de itens</span>
-                            <span>R$ 29,70</span>
-                        </SummaryItem>
+                            <SelectedProduct>
+                            </SelectedProduct>
+                            <StyledHr />
+                        </SelectedProducts>
+                        <OrderSummary>
+                            <SummaryItem>
+                                <span>Total de itens</span>
+                                <span>R$ 29,70</span>
+                            </SummaryItem>
 
-                        <SummaryItem>
-                            <span>Entrega</span>
-                            <span>R$ 3,50</span>
-                        </SummaryItem>
+                            <SummaryItem>
+                                <span>Entrega</span>
+                                <span>R$ 3,50</span>
+                            </SummaryItem>
 
-                        <SummaryTotal>
-                            <span>Total</span>
-                            <span>R$ 33,20</span>
-                        </SummaryTotal>
-                        <Link to="/success" style={{
-                            all: "unset",
-                        }}>
-                            <ConfirmOrderButton>CONFIRMAR PEDIDO</ConfirmOrderButton>
-                        </Link>
-                    </OrderSummary>
-                </OrderDetails>
-            </OrderDetailsContainer>
+                            <SummaryTotal>
+                                <span>Total</span>
+                                <span>R$ 33,20</span>
+                            </SummaryTotal>
+
+                            <ConfirmOrderButton type="submit">CONFIRMAR PEDIDO</ConfirmOrderButton>
+                        </OrderSummary>
+                    </OrderDetails>
+                </OrderDetailsContainer>
+            </form>
         </Container>
     )
 }

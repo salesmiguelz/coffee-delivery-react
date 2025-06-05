@@ -57,7 +57,7 @@ export const DeliveryAddressIcon = styled.div`
 export const DeliveryAddressText = styled.div`
 `
 
-export const DeliveryForm = styled.form`
+export const DeliveryForm = styled.div`
     margin-top: 18px;
 `
 
@@ -140,7 +140,7 @@ export const SummaryTotal = styled(SummaryItem)`
   color: ${props => props.theme['base-subtitle']};
 `;
 
-export const ConfirmOrderButton = styled.div`
+export const ConfirmOrderButton = styled.button`
     background-color: ${props => props.theme['yellow']};
     color: ${props => props.theme['white']};
     display: flex;
@@ -155,6 +155,11 @@ export const ConfirmOrderButton = styled.div`
     margin-top: 14px;
 
     cursor: pointer;
+
+    width: 100%;
+
+    outline: none;
+    border: none;
 `
 
 export const StyledHr = styled.hr`
