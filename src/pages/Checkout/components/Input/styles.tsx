@@ -46,7 +46,7 @@ export const StyledInput = styled.input<InputProps>`
 export const OptionalLabel = styled.span`
   position: absolute;
   right: 12px;
-  top: 50%;
+  top: 40%;
   transform: translateY(-50%);
   font-size: 12px;
   font-style: italic;

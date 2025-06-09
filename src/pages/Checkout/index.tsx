@@ -6,16 +6,19 @@ import { PaymentMethod } from "./components/PaymentMethod";
 import { SelectedProduct } from "./components/SelectedProduct";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import z from "zod";
+import { z } from "zod";
 
 const newOrderFormValidationSchema = z.object({
     zipcode: z.string().min(1, 'Informe o CEP'),
     street: z.string().min(1, 'Insira o nome da rua'),
-    number: z.number().positive('Insira um número válido'),
+    number: z.coerce.number({
+        required_error: 'Informe o número',
+        invalid_type_error: 'O número deve ser um valor numérico',
+    }).min(1, 'O número deve ser maior que zero'),
     complement: z.string().optional(),
     neighborhood: z.string().min(1, 'Insira seu bairro'),
     city: z.string().min(1, 'Insira sua cidade'),
-    uf: z.string().min(1, 'Insira seu estado').max(2),
+    uf: z.string().min(1, 'Insira seu estado').max(2, 'O estado deve conter apenas 2 caracteres'),
     paymentMethod: z.enum(['credit', 'debit', 'cash'])
 });
 
@@ -33,7 +36,8 @@ export function Checkout() {
             city: '',
             uf: '',
             paymentMethod: 'credit'
-        }
+        },
+
     });
 
     const selectedPaymentMethod = watch("paymentMethod")
@@ -76,7 +80,7 @@ export function Checkout() {
                             <Input placeholder='Complemento' size='M' optional errors={errors?.complement?.message}{...register('complement')} />
                             <Input placeholder='Bairro' size='S' errors={errors?.neighborhood?.message}{...register('neighborhood')} />
                             <Input placeholder='Cidade' size='S' errors={errors?.city?.message} {...register('city')} />
-                            <Input placeholder='UF' size='XS' {...register('uf')} />
+                            <Input placeholder='UF' size='XS' errors={errors?.uf?.message}{...register('uf')} />
                         </DeliveryForm>
                     </DeliveryAddress>
 
@@ -99,7 +103,6 @@ export function Checkout() {
                         </PaymentMethods>
 
                     </Payment>
-
                 </FinishOrder>
 
                 <OrderDetailsContainer>

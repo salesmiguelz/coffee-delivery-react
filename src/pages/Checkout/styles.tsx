@@ -18,7 +18,11 @@ export const Container = styled.div`
     margin-top: 50px;
     display: flex;
     flex-direction: row;
-    gap: 50px;
+
+    form{
+        display: flex;
+        gap: 120px;
+    }
 `
 
 export const FinishOrder = styled.div`
