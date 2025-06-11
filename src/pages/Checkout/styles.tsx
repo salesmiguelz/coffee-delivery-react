@@ -164,6 +164,11 @@ export const ConfirmOrderButton = styled.button`
 
     outline: none;
     border: none;
+    transition: background-color 0.2s ease;
+    &:hover{
+        cursor: pointer;
+        background-color: ${props => props.theme['yellow-dark']};
+    }
 `
 
 export const StyledHr = styled.hr`
