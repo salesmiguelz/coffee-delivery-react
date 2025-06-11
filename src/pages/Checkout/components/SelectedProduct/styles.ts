@@ -47,6 +47,12 @@ export const RemoveButton = styled.div`
 
    color: ${props => props.theme['base-text']};
    font-size: 15px;
+
+   transition: background-color 0.2s ease;
+    &:hover{
+        cursor: pointer;
+        background-color: ${props => props.theme['base-hover']};
+    }
 `
 
 export const TrashIconStyled = styled(TrashIcon)`
