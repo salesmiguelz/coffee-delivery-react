@@ -17,7 +17,7 @@ export function Success() {
                             <MapPinIcon weight="fill" />
                         </IconWrapper>
                         <ItemText>
-                            Entrega em  <strong>Av. Presidente Itamar Franco, 1625</strong>
+                            Entrega em  <strong>Av. Presidente Itamar Franco, 1600</strong>
                             <br />
                             São Mateus - Juiz de Fora, MG
                         </ItemText>
