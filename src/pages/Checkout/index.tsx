@@ -7,6 +7,8 @@ import { SelectedProduct } from "./components/SelectedProduct";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useContext } from "react";
+import { CartContext } from "../../contexts/CartContext";
 
 const newOrderFormValidationSchema = z.object({
     zipcode: z.string().min(1, 'Informe o CEP'),
@@ -40,7 +42,9 @@ export function Checkout() {
 
     });
 
-    const selectedPaymentMethod = watch("paymentMethod")
+    const selectedPaymentMethod = watch("paymentMethod");
+    const { cart } = useContext(CartContext)
+
     function handleSetSelectedPaymentMethod(type: 'credit' | 'debit' | 'cash') {
         if (type !== selectedPaymentMethod) {
             setValue("paymentMethod", type, {
@@ -109,12 +113,24 @@ export function Checkout() {
                     <Title>Cafés selecionados</Title>
                     <OrderDetails>
                         <SelectedProducts>
-                            <SelectedProduct>
-                            </SelectedProduct>
-                            <StyledHr />
+                            {
+                                cart.length > 0
+                                    ? cart.map(product => {
+                                        return <>
+                                            <SelectedProduct
+                                                key={product.id}
+                                                id={product.id}
+                                                image={product.image}
+                                                name={product.name}
+                                                price={product.price}
+                                                quantity={product.quantity}
+                                            />
+                                            <StyledHr />
+                                        </>
+                                    })
+                                    : <p>Não há produtos no carrinho.</p>
+                            }
 
-                            <SelectedProduct>
-                            </SelectedProduct>
                             <StyledHr />
                         </SelectedProducts>
                         <OrderSummary>

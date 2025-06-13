@@ -1,14 +1,22 @@
+import { CartContext } from "../../../../contexts/CartContext";
 import { Counter } from "../../../Home/components/Coffees/Counter";
 import { Container, ImageContainer, Price, ProductActions, ProductData, RemoveButton, Title, TrashIconStyled } from "./styles";
-import CoffeeImage from '../../../../assets/coffee.svg'
-import { useState } from "react";
+import { useContext, useState } from "react";
 
+interface SelectProductProps {
+    id: string,
+    name: string,
+    image: string,
+    price: number,
+    quantity: number
+}
 
+export function SelectedProduct({ id, name, image, price, quantity }: SelectProductProps) {
+    const [selectedProductCounter, setSelectedProductCounter] = useState(quantity)
 
-export function SelectedProduct() {
-    const [selectedProductCounter, setSelectedProductCounter] = useState(0)
+    const { removeProductFromCart, increaseProductQuantityFromCart, decreaseProductQuantityFromCart } = useContext(CartContext)
 
-    function handleIncreaseSelectProductCounter() {
+    function handleIncreaseSelectProductCounter(id: string) {
         setSelectedProductCounter(counter => {
             if (counter + 1 === 99) {
                 return 99;
@@ -16,8 +24,10 @@ export function SelectedProduct() {
                 return counter + 1;
             }
         });
+
+        increaseProductQuantityFromCart(id)
     }
-    function handleDecreaseSelectProductCounter() {
+    function handleDecreaseSelectProductCounter(id: string) {
         setSelectedProductCounter(counter => {
             if (counter - 1 === -1) {
                 return 0;
@@ -25,25 +35,26 @@ export function SelectedProduct() {
                 return counter - 1;
             }
         });
+
+        decreaseProductQuantityFromCart(id)
     }
     return (
         <Container>
             <ImageContainer>
-                <img src={CoffeeImage} alt="" />
+                <img src={image} alt="" />
             </ImageContainer>
 
             <ProductData>
-                <Title>Expresso tradicional</Title>
+                <Title>{name}</Title>
                 <ProductActions>
-                    <Counter value={selectedProductCounter} onIncrease={handleIncreaseSelectProductCounter} onDecrease={handleDecreaseSelectProductCounter} />
-                    <RemoveButton>
+                    <Counter value={selectedProductCounter} onIncrease={() => handleIncreaseSelectProductCounter(id)} onDecrease={() => handleDecreaseSelectProductCounter(id)} />
+                    <RemoveButton onClick={() => removeProductFromCart(id)}>
                         <TrashIconStyled />
                         <p>REMOVER</p>
                     </RemoveButton>
                 </ProductActions>
             </ProductData>
-            <Price>R$ 9,88</Price>
-
+            <Price>{price}</Price>
         </Container>
     )
 }

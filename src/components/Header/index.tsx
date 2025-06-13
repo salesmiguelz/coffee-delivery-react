@@ -2,8 +2,12 @@ import { ShoppingCartIcon } from "@phosphor-icons/react"
 import logo from "../../assets/logo.svg"
 import { HeaderCart, HeaderContainer, HeaderInfo, HeaderLocale, HeaderLocaleIcon, LogoContainer } from "./styles"
 import { Link } from "react-router-dom"
+import { CartContext } from "../../contexts/CartContext"
+import { useContext } from "react"
 
 export function Header() {
+    const { cartLength } = useContext(CartContext)
+
     return (
         <HeaderContainer>
             <Link to="/" style={{
@@ -36,7 +40,7 @@ export function Header() {
                         justifyContent: "center",
                     }}>
                         <span>
-                            3
+                            {cartLength}
                         </span>
                         <ShoppingCartIcon size={24} weight="fill" />
                     </Link>

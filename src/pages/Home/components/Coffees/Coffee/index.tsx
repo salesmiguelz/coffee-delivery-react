@@ -1,22 +1,26 @@
 import { ShoppingCartIcon } from '@phosphor-icons/react';
 import { Counter } from '../Counter';
 import { Container, Title, Actions, Description, ImageContainer, Categories, Category, TextContainer, Price, Currency, Value, CartContainer } from "./styles";
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { CartContext } from '../../../../../contexts/CartContext';
 
 interface CategoryProps {
     id: string,
     name: string,
 }
 interface CoffeeProps {
+    id: string,
     image: string,
     name: string,
     categories: CategoryProps[],
     description: string,
-    price: string
+    price: number
 }
 
-export function Coffee({ image, name, categories, description, price }: CoffeeProps) {
+export function Coffee({ id, image, name, categories, description, price }: CoffeeProps) {
     const [coffeeCounter, setCoffeeCounter] = useState(1);
+
+    const { addProductToCart } = useContext(CartContext)
 
     function handleIncreaseCoffeeCounter() {
         setCoffeeCounter(counter => {
@@ -36,6 +40,10 @@ export function Coffee({ image, name, categories, description, price }: CoffeePr
                 return counter - 1;
             }
         });
+    }
+
+    function handleAddProductToCart(id: string, quantity: number) {
+        addProductToCart(id, quantity)
     }
 
     return (
@@ -65,9 +73,8 @@ export function Coffee({ image, name, categories, description, price }: CoffeePr
                 </Price>
                 <Counter value={coffeeCounter} onIncrease={handleIncreaseCoffeeCounter} onDecrease={handleDecreaseCoffeeCounter} />
                 <CartContainer>
-                    <ShoppingCartIcon color='white' weight='fill' size={22} />
+                    <ShoppingCartIcon color='white' weight='fill' size={22} onClick={() => handleAddProductToCart(id, coffeeCounter)} />
                 </CartContainer>
-
             </Actions>
         </Container>
     )
