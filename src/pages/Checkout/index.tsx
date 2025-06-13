@@ -7,8 +7,9 @@ import { SelectedProduct } from "./components/SelectedProduct";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../contexts/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const newOrderFormValidationSchema = z.object({
     zipcode: z.string().min(1, 'Informe o CEP'),
@@ -41,9 +42,17 @@ export function Checkout() {
         },
 
     });
+    const [cartTotal, setCartTotal] = useState(0);
 
     const selectedPaymentMethod = watch("paymentMethod");
     const { cart } = useContext(CartContext)
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        const cartTotalValue = cart.reduce((sum, product) => sum + product.price * product.quantity, 0)
+        setCartTotal(cartTotalValue);
+    }, [cart])
 
     function handleSetSelectedPaymentMethod(type: 'credit' | 'debit' | 'cash') {
         if (type !== selectedPaymentMethod) {
@@ -54,8 +63,8 @@ export function Checkout() {
         }
     }
 
-    function handleNewOrderFormSubmit(data: NewOrderFormData) {
-        console.log("data", data);
+    function handleNewOrderFormSubmit() {
+        navigate('/success');
     }
 
     return (
@@ -136,7 +145,7 @@ export function Checkout() {
                         <OrderSummary>
                             <SummaryItem>
                                 <span>Total de itens</span>
-                                <span>R$ 29,70</span>
+                                <span>R$ {cartTotal}</span>
                             </SummaryItem>
 
                             <SummaryItem>
@@ -146,7 +155,7 @@ export function Checkout() {
 
                             <SummaryTotal>
                                 <span>Total</span>
-                                <span>R$ 33,20</span>
+                                <span>R$ {cartTotal + 3.50} </span>
                             </SummaryTotal>
 
                             <ConfirmOrderButton type="submit">CONFIRMAR PEDIDO</ConfirmOrderButton>

@@ -54,7 +54,7 @@ export function SelectedProduct({ id, name, image, price, quantity }: SelectProd
                     </RemoveButton>
                 </ProductActions>
             </ProductData>
-            <Price>{price}</Price>
+            <Price>R$ {price}</Price>
         </Container>
     )
 }
